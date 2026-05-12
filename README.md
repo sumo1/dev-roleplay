@@ -16,20 +16,22 @@ LLM 有同样的问题。上下文里留下的东西就是它的偏置——它�
 
 | 角色 | 人类对照 | 核心职责 | 硬边界 |
 |------|---------|---------|--------|
-| task-designer | Tech Lead | 拆任务、开契约、生成任务文档结构 | 不写代码 |
-| coder | Engineer | 按契约施工、本地自验 | 不做 drive-by refactor、不碰契约外文件 |
-| evaluator | QA | 复跑验收命令、独立判定是否达标 | 不改代码、不补契约 |
-| code-reviewer | Staff Reviewer | 独立看 diff、风险分级 | 不改代码、不做 QA 的活 |
-| doc-refresher | Tech Writer | 代码 vs 文档一致性 | 不改文档，只标记过时项 |
-| dreamer | Knowledge Curator | 把流水式记忆沉淀为长期知识 | 不发明、不覆盖原始条目 |
-| git-push | Release Manager | 前置检查 → review → 提交 → 推送 | 不跳过钩子、不强推、不改写历史 |
+| [task-designer](./roles/task-designer.md) | Tech Lead | 拆任务、开契约、生成任务文档结构 | 不写代码 |
+| [coder](./roles/coder.md) | Engineer | 按契约施工、本地自验 | 不做 drive-by refactor、不碰契约外文件 |
+| [evaluator](./roles/evaluator.md) | QA | 复跑验收命令、独立判定是否达标 | 不改代码、不补契约 |
+| [code-reviewer](./roles/code-reviewer.md) | Staff Reviewer | 独立看 diff、风险分级 | 不改代码、不做 QA 的活 |
+| [doc-refresher](./roles/doc-refresher.md) | Tech Writer | 代码 vs 文档一致性 | 不改文档，只标记过时项 |
+| [dreamer](./roles/dreamer.md) | Knowledge Curator | 把流水式记忆沉淀为长期知识 | 不发明、不覆盖原始条目 |
+| [git-push](./roles/git-push.md) | Release Manager | 前置检查 → review → 提交 → 推送 | 不跳过钩子、不强推、不改写历史 |
 
 ## 4 条协议
 
-- **Soul**：每个角色以"性格"而非"任务描述"开头，用风格化的约束对抗 LLM 在长上下文里的行为漂移
-- **Dual Contract**：同一份 plan 文件里同时写"施工契约"和"验收契约"，让施工者和验收者在同一张纸上对齐
-- **Refusal Loop**：验收者必须复跑，不认施工者自报；连续多轮无法达标时升级给主调度者，避免施工者/验收者陷入死循环
-- **Memory Layering**：记忆分"按日沉淀 / 任务汇总 / 跨任务知识"三层，写入、整理、上浮由不同角色负责，避免一个 agent 自己管自己的记忆
+- **[Soul](./doctrine/02-soul-section.md)**：每个角色以"性格"而非"任务描述"开头，用风格化的约束对抗 LLM 在长上下文里的行为漂移
+- **[Dual Contract](./doctrine/03-dual-contract.md)**：同一份 plan 文件里同时写"施工契约"和"验收契约"，让施工者和验收者在同一张纸上对齐
+- **[Refusal Loop](./doctrine/04-refusal-loop.md)**：验收者必须复跑，不认施工者自报；连续多轮无法达标时升级给主调度者，避免施工者 / 验收者陷入死循环
+- **[Memory Layering](./doctrine/05-memory-layering.md)**：记忆分"按日沉淀 / 任务汇总 / 跨任务知识"三层，写入、整理、上浮由不同角色负责，避免一个 agent 自己管自己的记忆
+
+更多思想推导见 [`doctrine/`](./doctrine/)。
 
 ## 适用与不适用
 
@@ -49,6 +51,16 @@ LLM 有同样的问题。上下文里留下的东西就是它的偏置——它�
 
 dev-roleplay 面向支持独立 subagent 原语的 coding agent 工具（如 Claude Code）。
 角色骨架与语言、框架、技术栈无关；引用的路径、命令、规范文档都由使用者在项目内自行定义。
+
+具体接入方式见 [`integration/claude-code/`](./integration/claude-code/)。
+真实项目下的填充形态见 [`examples/`](./examples/)。
+
+## 目录
+
+- [`roles/`](./roles/) — 7 个角色骨架
+- [`doctrine/`](./doctrine/) — 设计思想与反模式
+- [`integration/`](./integration/) — 针对具体 harness 的接入指南
+- [`examples/`](./examples/) — 真实项目下的填充样例
 
 ## License
 
