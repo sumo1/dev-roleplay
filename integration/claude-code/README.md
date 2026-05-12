@@ -1,10 +1,8 @@
 # Claude Code 集成
 
-这套角色当前在 Claude Code 下验证过。这里讲怎么把 `roles/` 下的骨架接进 Claude Code。
+把 [`../../roles/`](../../roles/) 下的骨架接进 Claude Code 的做法。
 
-_(具体内容将在后续提交中补齐)_
-
-计划包含：
+包含：
 
 - `.claude/agents/` 下文件布局
 - `tools:` 字段的推荐白名单（按角色分）
@@ -14,7 +12,7 @@ _(具体内容将在后续提交中补齐)_
 
 ## 填空清单
 
-使用前你需要在项目里填的占位符（示例）：
+使用前需要在项目里填的占位符：
 
 | 占位符 | 说明 | 示例 |
 |--------|------|------|
@@ -22,6 +20,6 @@ _(具体内容将在后续提交中补齐)_
 | `{knowledge-root}` | 跨任务知识库 | `docs/knowledge/` |
 | `{engineering-root}` | 项目规范目录 | `docs/engineering/` |
 | `{verification-spec}` | 本地自验清单锚点 | 项目 CONTRIBUTING.md 中的段落 |
-| `{sensitive-boundary-spec}` | 高风险/迁移期专项规则（如有） | `docs/engineering/conventions.md § 某段` |
+| `{sensitive-boundary-spec}` | 高风险/迁移期专项规则（如有） | 项目规范文档中的相应段落 |
 
 **不填具体命令**——自验怎么跑、用什么工具、哪些文件触发哪些检查，由项目在 `{verification-spec}` 里自定义。框架不规定。

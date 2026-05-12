@@ -1,10 +1,8 @@
 # Roles — 角色骨架
 
-这里是 7 个角色的**泛化 prompt**。已去除项目专属内容（TS/Node 命令、medeo-market 目录、业务规范锚点），保留角色性格、职责、硬边界、协议契约。
+7 个角色的 prompt 骨架。语言和工具无关。
 
 ## 篇目
-
-_(以下文件将在后续提交中补齐——从 medeo-market 实战版本拔高改写)_
 
 - `task-designer.md`
 - `coder.md`
@@ -21,7 +19,7 @@ _(以下文件将在后续提交中补齐——从 medeo-market 实战版本拔�
 推荐做法：
 
 1. 把文件拷贝到你项目的 `.claude/agents/` 下（或对应 harness 的 agent 目录）
-2. 在你项目根建 `integration.md`，填入该项目的具体约定（见 [`../integration/claude-code/`](../integration/claude-code/) 示例）
+2. 在你项目根建 `integration.md`，填入该项目的具体约定（见 [`../integration/claude-code/`](../integration/claude-code/)）
 3. 按需增删角色——7 个是推荐起点，不是定数
 
 ## 目录约定（框架唯一的强约定）
