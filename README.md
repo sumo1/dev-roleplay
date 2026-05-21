@@ -1,38 +1,45 @@
 # dev-roleplay
 
-让 AI 写的代码，和它该理解的业务知识，一起沉淀进同一个仓库。
+> 让代码 + 业务知识，作为一对完整的 SSOT，进入软件工程的 harness。
 
-## 它在解决什么
+## 你是否也面临这些问题
 
-dev-roleplay 是一套面向 AI coding agent 的协作骨架——七个角色、几条协议、一份目录约定。最直观的用法是把"让一个大 agent 把活全包"换成"一组各司其职的角色按契约协作"，用独立视角对抗单 agent 的"自洽但漂移"。
+业务知识到底活在哪？
 
-但角色分工只是表层。这套骨架真正想解决的是另一个问题：
+**沉淀在代码里**——代码能告诉你系统现在怎么跑，但说不出"为什么不那么跑"。被否决的方案、当年的权衡、字段命名背后的约束、这层抽象**为什么没加**——全都活在代码的负空间里，看不见。
 
-> AI 写一次代码很容易，让它每写一次都比上次更懂这个项目，难。
+**沉淀在文档里**——但文档放在 Confluence、Notion、飞书时，它脱离了工程纪律：不会被 review、不会被 diff、不会被回溯，每次代码改完文档没人想起来同步，过两个月就和现实脱节。然后大家就不信文档了。
 
-每次任务结束后，agent 学到的判断、踩过的坑、被否决的方案，全在那次会话的上下文里。会话一关，全部蒸发。下次新 agent 来，从零开始论证已经决定过的事，从零开始踩已经踩过的坑。
+**沉淀在人脑里**——人会忘，人会走，人和人对接有成本。一个项目的关键判断只要还在某个人脑里没出来，他请假的时候这个项目就在带病运行。
 
-dev-roleplay 给的解法是把**业务知识**作为和**代码**同等重要的项目资产——放进 git、和代码一起 review、一起 commit、一起持续维护。这样后续来的人和 agent 都能站在前人的沉淀上做事，而不是每次重启炉灶。
+三个地方各有缺陷，单独任何一个都不能作为业务知识的 SSOT。
 
-## 双 SSOT：代码和文档都是一等公民
+可是 AI agent 上场之后，这件事的代价被放大了：
 
-代码表达系统**怎么跑**。
-文档表达系统**为什么这么跑**——业务意图、边界来源、被否决的方案。
+**agent 写一次代码很容易，让它每写一次都比上次更懂这个项目，难。**
 
-后面这一半，是项目工程除了代码之外的另一条**业务表达**——SSOT 的另一条腿。代码无法表达"我们曾经考虑过 A，因为 X 否掉了"，无法表达"这个字段为什么用 snake_case"，无法表达"这层抽象为什么没加"。这些活在代码"负空间"里的判断，只能交给文档承担。
+每次任务结束，agent 学到的判断、踩过的坑、被否决的方案，全留在那次会话上下文里。会话一关，全部蒸发。下次新 agent 来，从零开始论证已经决定过的事，从零开始踩已经踩过的坑——和让一个失忆的同事每周一重新入职一样昂贵。
 
-两个 SSOT 必须始终一致，否则任何一边都会退化成装饰。这是为什么文档必须放进 git，和代码用同一套纪律维护——只有当文档会被 review、被 diff、被回溯，它才会被认真对待。Confluence、Notion、飞书都不行，它们让文档脱离工程纪律，文档很快就和代码脱节。
+## 它的解法：把业务知识装进工程的 harness
 
-哲学的完整推导在 [`doctrine/00-dual-ssot.md`](./doctrine/00-dual-ssot.md)。
+dev-roleplay 主张：**代码不再是工程仓库的唯一一等公民，业务知识是另一等公民**。两者一起作为软件工程的双 SSOT，受同一套 harness 约束——同一个 git repo、同一套 review 纪律、同一套腐坏惩罚。
+
+这个 harness 把三段时间里的业务知识都收进来：
+
+- **前置**——已经沉淀的项目背景、跨任务原则、工程规范，放在 `docs/knowledge/` 和 `docs/engineering/`，开工前 agent 会主动读
+- **当下**——这次任务的 PRD、双契约、按日决策、被否决的方案，放在 `docs/task/{id}/`，整个任务过程在这里发生、可追溯、可审计
+- **沉淀回去**——任务结束时把这次产生的判断、踩坑、原则蒸馏出来，回到前置的知识库，让下一个任务从更厚实的起点出发
+
+写代码的过程同时也是写业务知识的过程，两者在同一个 PR 里被 review、一起 commit、一起被三个月后回看的人读到。**代码读到 what，文档读到 why**——这才是工程的完整 SSOT。
 
 ## 七个角色服务三个时间方向
 
 整套 agents 不是一条横向流水线，而是知识在时间轴上的三段流动：
 
 ```
-   过去                 现在                  未来
+   前置                  当下                    沉淀回去
 ─────────────────────────────────────────────────────
- 历史沉淀  ─→   当前任务的拆解 + 执行  ─→   沉淀回去
+ 历史沉淀  ─→   当前任务的拆解 + 执行  ─→   入仓回流
 
 knowledge/       task-designer              dreamer
 engineering/     coder + evaluator             ↓
@@ -42,58 +49,73 @@ engineering/     coder + evaluator             ↓
    └──────  下一次任务从新鲜起点出发  ─────────┘
 ```
 
-- **过去 → 现在**：task-designer 强制读历史沉淀，让上次任务的判断真正被这次用上
-- **现在**：coder / evaluator / code-reviewer 三个独立视角拦截不同方向的偏差
-- **现在 → 未来**：doc-refresher 把可能腐坏的文档标出来（保鲜），dreamer 把这次任务里的判断和教训上浮回知识库（沉淀）
+**前置 → 当下**是一条容易腐坏的链路——文档不和代码一起维护，下一次 task-designer 读到的就是过期事实，整条链从一开始就漂移。`doc-refresher` 守这一段，每次代码变更后扫一遍可能腐坏的文档，让下一次任务从新鲜起点出发。
 
-doc-refresher 和 dreamer 是体系的两台引擎——一台防止过去→现在的链路腐坏，一台保障现在→未来的链路畅通。少任何一台，业务知识每次任务结束就流失掉，整套 agents 体系退化成"几个干活的工种"。
+**当下**是一段需要独立视角的工作——`coder` 写、`evaluator` 验、`code-reviewer` 审，三个角色各自独立上下文，互相不污染判断。这个分工和人类工程团队"写代码的人不验自己的代码"是同一个原理：上下文一旦把判断力污染了，再聪明也看不出自己的盲区。
+
+**当下 → 沉淀回去**是一段最容易流失的链路——这次任务里被否决的 A 方案、推翻过的假设、用证据换来的判断，如果不上浮回知识库，下一个任务还得从头再走一遍。`dreamer` 守这一段，把流水的 task memory 蒸馏成可长期参考的 SUMMARY 和跨任务原则。
+
+`doc-refresher` 和 `dreamer` 是这套体系的两台引擎。少一台，业务知识每次任务结束就流失；少两台，整套 agents 就退化成"几个干活的工种"，跟一个失忆的实习生没区别。
+
+## 让代码读到更多的 why
+
+这套 harness 跑起来之后，三个月后回看这段代码的人——不管是新来的工程师还是新启动的 agent——能在仓库里直接读到：
+
+- **what**：代码怎么写的
+- **why**：当时为什么这么选（在 task memory 里）
+- **why not**：当时没选什么、被什么证据否决（在 archive 里）
+- **同类怎么做**：同模块过往的判断（在 SUMMARY 里）
+- **跨任务的通用原则**：哪些约束不只对这次有效（在 knowledge 里）
+
+不需要找当年的人问，不需要翻 Slack 记录，不需要拼凑 commit message。**业务的 why 在代码隔壁的文件里，永远新鲜，永远跟得上代码**——这是 dev-roleplay 真正想交付的东西。
+
+哲学的完整推导见 [`doctrine/`](./doctrine/)，先读 [`00-dual-ssot`](./doctrine/00-dual-ssot.md)。
 
 ## 角色清单
 
 | 角色 | 时间方向 | 核心职责 |
 |---|---|---|
-| [task-designer](./roles/task-designer.md) | 过去 → 现在 | 读历史沉淀，拆任务、开契约 |
-| [coder](./roles/coder.md) | 现在 | 按契约施工、本地自验 |
-| [evaluator](./roles/evaluator.md) | 现在 | 复跑验收命令，独立判定 |
-| [code-reviewer](./roles/code-reviewer.md) | 现在 | 看 diff、风险分级 |
-| [doc-refresher](./roles/doc-refresher.md) | 现在 → 未来（保鲜引擎） | 把可能腐坏的文档标出 |
-| [dreamer](./roles/dreamer.md) | 现在 → 未来（沉淀引擎） | 把流水记忆酿造为长期知识 |
+| [task-designer](./roles/task-designer.md) | 前置 → 当下 | 读历史沉淀，拆任务、开契约 |
+| [coder](./roles/coder.md) | 当下 | 按契约施工、本地自验 |
+| [evaluator](./roles/evaluator.md) | 当下 | 复跑验收命令，独立判定 |
+| [code-reviewer](./roles/code-reviewer.md) | 当下 | 看 diff、风险分级 |
+| [doc-refresher](./roles/doc-refresher.md) | 当下 → 沉淀（保鲜引擎） | 把可能腐坏的文档标出 |
+| [dreamer](./roles/dreamer.md) | 当下 → 沉淀（沉淀引擎） | 把流水记忆酿造为长期知识 |
 | [git-push](./roles/git-push.md) | 流程闸口 | 检查 → review → 提交 → 推送 |
 
-每个角色文件按同一套结构写：性格 → 输入契约 → 工作流程 → 产出 → 硬边界 → 禁止事项。性格段（"Soul"）放最前——它不是装饰，是角色行为的核心约束。详见 [`doctrine/02-soul-section.md`](./doctrine/02-soul-section.md)。
-
-## 几条协议
+## 协议
 
 让七个角色真正协作起来的，是仓库里几个跨角色的硬约定：
 
-- **双契约**——每个独立子任务的 plan 文件里同时写施工契约（给 coder）和验收契约（给 evaluator），两段配对、互相对应。详见 [`doctrine/03-dual-contract.md`](./doctrine/03-dual-contract.md)
-- **打回循环**——evaluator 必须独立复跑命令，不认 coder 自报；同一条契约项连续多轮打回时升级给人类裁决，避免两个 agent 越修越乱。详见 [`doctrine/04-refusal-loop.md`](./doctrine/04-refusal-loop.md)
-- **三层记忆**——按日沉淀 → 任务汇总 → 跨任务知识，写入、整理、上浮分别由不同角色负责，避免 agent 自己管自己的记忆。详见 [`doctrine/05-memory-layering.md`](./doctrine/05-memory-layering.md)
+- **双契约**——每个独立子任务的 plan 文件里同时写施工契约（给 coder）和验收契约（给 evaluator），两段配对。详见 [`doctrine/03-dual-contract`](./doctrine/03-dual-contract.md)
+- **打回循环**——evaluator 必须独立复跑命令，不认 coder 自报；连续多轮打回时升级人类裁决，避免两个 agent 越修越乱。详见 [`doctrine/04-refusal-loop`](./doctrine/04-refusal-loop.md)
+- **三层记忆**——按日沉淀 → 任务汇总 → 跨任务知识，写入、整理、上浮分别由不同角色负责，避免 agent 自己管自己的记忆。详见 [`doctrine/05-memory-layering`](./doctrine/05-memory-layering.md)
 
 ## 起源
 
-这套骨架不是先有理论再写示例，是从一个真实的跨多仓库服务迁移项目里活下来的——多 coder 并行施工逼出了双契约和文件范围互斥；反复看到"用户点破同一类问题"沉淀成了"先质疑问题是否成立"原则；跨仓库切流的漂移代价催生了三层记忆流动；文档与代码不断脱节让"提交前扫一遍文档新鲜度"成了流水线的固定一站。
+这套骨架不是先有理论再写示例，是从一个真实的跨多仓库服务迁移项目里活下来的——多 coder 并行施工逼出了双契约和文件范围互斥；反复看到"用户点破同一类问题"沉淀成了"先质疑问题是否成立"原则；跨仓库切流的漂移代价催生了三层记忆流动；文档与代码不断脱节让"提交前扫一遍文档新鲜度"成了流水线固定一站。
 
 脱敏后的真实形态在 [`examples/typescript-api/`](./examples/typescript-api/)——一个完整任务从 background 探索、双契约 plan、按日 memory，到 dreamer 蒸馏出 SUMMARY、再上浮一条原则到 `knowledge/principles/` 的全程。
 
 ## 用与不用
 
-**适合**：多步骤、跨模块、错一点就很贵、会被多次回看的工程任务——数据一致性、API 契约、服务迁移、长期演进的产品代码。
+适合：多步骤、跨模块、错一点就很贵、会被多次回看的工程任务——数据一致性、API 契约、服务迁移、长期演进的产品代码。
 
-**不适合**：一次性小改、探索性 prototyping、单文件脚本。还有一种情况要特别提：团队**不接受文档进 git**，文档继续放外部工具——这种情况 doc-refresher 和 dreamer 失去落点，整套体系会退化成"七个干活的工种"，没有意义。
+不适合：一次性小改、探索性 prototyping、单文件脚本。
 
-详细的反模式讨论在 [`doctrine/06-anti-patterns.md`](./doctrine/06-anti-patterns.md)。
+还有一种情况要特别提：团队不接受文档进 git，文档继续放外部工具——这种情况 doc-refresher 和 dreamer 失去落点，整套体系会退化成"七个干活的工种"。这是哲学不匹配，不是工具问题。
+
+详细讨论在 [`doctrine/06-anti-patterns`](./doctrine/06-anti-patterns.md)。
 
 ## 范围
 
 dev-roleplay 面向支持独立 subagent 原语的 coding agent 工具（如 Claude Code）。
 角色骨架与语言、框架、技术栈无关；具体路径、命令、规范由使用者在自己项目内定义。
-
 具体接入方式见 [`integration/claude-code/`](./integration/claude-code/)。
 
 ## 目录
 
-- [`doctrine/`](./doctrine/) — 设计思想与反模式（先读 [`00-dual-ssot`](./doctrine/00-dual-ssot.md)）
+- [`doctrine/`](./doctrine/) — 设计思想（先读 [`00-dual-ssot`](./doctrine/00-dual-ssot.md)）
 - [`roles/`](./roles/) — 7 个角色骨架
 - [`integration/`](./integration/) — 针对具体 harness 的接入指南
 - [`examples/`](./examples/) — 真实项目下的填充样例
