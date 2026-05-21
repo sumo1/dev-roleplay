@@ -55,7 +55,7 @@ dev-roleplay 主张：**代码不再是工程仓库的唯一一等公民，业�
 
 ## 抗 context rot：沉淀不是越多越好
 
-自进化的天敌不是"沉淀太少"，是"沉淀失控"。
+让Agent避免因之前的任务而积累混乱并保持专注。自进化的天敌不是"沉淀太少"，是"沉淀失控"。
 
 业界把这个现象叫 **context rot**——上下文越长，模型抓不住重点的概率越大；信息越多，注意力越被稀释；噪音越积越厚，关键约束被淹没。沉淀本是为了让下一次任务起点更高，但**沉淀失控反而把起点拖低**——下一个 agent 翻 50 条 memory 半天找不到这次任务真正该看的那 3 条，新引入的判断和旧条目互相打架，最后干脆假装没看见。
 
@@ -166,7 +166,7 @@ engineering/     coder + evaluator             ↓
 
 这套骨架不是先有理论再写示例，是从一个真实的跨多仓库服务迁移项目里活下来的——多 coder 并行施工逼出了双契约和文件范围互斥；反复看到"用户点破同一类问题"沉淀成了"先质疑问题是否成立"原则；跨仓库切流的漂移代价催生了三层记忆流动；文档与代码不断脱节让"提交前扫一遍文档新鲜度"成了流水线固定一站。
 
-脱敏后的真实形态在 [`examples/typescript-api/`](./examples/typescript-api/)——一个完整任务从 background 探索、双契约 plan、按日 memory，到 dreamer 蒸馏出 SUMMARY、再上浮一条原则到 `knowledge/principles/` 的全程。
+脱敏后的真实形态在 [`examples/`](./examples/)——一个完整任务从 background 探索、双契约 plan、按日 memory，到 dreamer 蒸馏出 SUMMARY、再上浮一条原则到 `knowledge/principles/` 的全程。
 
 ## 用与不用
 
