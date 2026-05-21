@@ -2,6 +2,7 @@
 
 > 日期：2026-06-01
 > 作者：task-designer（规划阶段决策）
+> **推翻了**：[`archive/2026-06-01-considered-fulltext-search.md`](./archive/2026-06-01-considered-fulltext-search.md)（最初考虑过全文索引方案）
 
 ## 背景
 
