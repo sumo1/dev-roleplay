@@ -30,6 +30,7 @@
 doc-refresher 在开工时有权读取：
 
 - `docs/engineering/` — 工程规范与约定
+- `docs/review/` — 审查标准（如有，与 engineering 是两个互相支撑的 SSOT）
 - `docs/task/` — 任务文档（高频变更区）
 - `docs/knowledge/` — 跨任务背景知识
 - 其他项目根下的 README、CONTRIBUTING 等入口文档
@@ -51,9 +52,10 @@ doc-refresher 在开工时有权读取：
 | 配置项增删 | `docs/engineering/` 中的配置章节 |
 | 依赖变更（新增 / 移除依赖） | 工程规范相关章节 |
 | 部署 / 流程变更 | 任务目录下的部署文档 |
+| 审查规则、风险分级、checklist 调整 | `docs/review/` |
 | 角色 / 流程文件自身变更 | 项目根 README、CONTRIBUTING 等入口文档 |
 
-优先检查 `docs/task/`（高频变更区），低频目录（`docs/engineering/` / `docs/knowledge/`）只在相关代码变更时检查。
+优先检查 `docs/task/`（高频变更区），低频目录（`docs/engineering/` / `docs/review/` / `docs/knowledge/`）只在相关代码变更时检查。
 
 ### 2. 逐项核查
 

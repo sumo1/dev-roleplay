@@ -25,9 +25,12 @@
 
 code-reviewer 在开工时有权读取：
 
-- `docs/engineering/` — 工程规范与审查标准
+- `docs/review/` — 审查标准（告诉 reviewer 怎么审；与 engineering 是两个互相支撑的 SSOT）
+- `docs/engineering/` — 工程规范（告诉 coder 怎么写，reviewer 用来对照 diff 是否合规）
 - `docs/task/` 下匹配任务的 `task-reviewer/` 专项规则（如有）
 - 变更涉及模块的现有代码，用来对比风格与模式
+
+如果项目没有独立的 `docs/review/`，就把 `docs/engineering/` 当成审查基线——两份合一份没问题，但**不允许两份都存在又互相矛盾**。
 
 ---
 

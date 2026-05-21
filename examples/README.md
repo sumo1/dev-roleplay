@@ -16,8 +16,11 @@ dev-roleplay 在真实项目里**填充后**的样子——含完整任务沉淀
 
 ```
 examples/
-├── engineering/
-│   └── conventions.md                              # 项目工程规范
+├── engineering/                                    # 工程规范——告诉 coder 怎么写
+│   ├── conventions.md                              # 通用基线：命名 / 错误 / 日志 / API
+│   └── tracing.md                                  # 主题分册示例：可观测性规范
+├── review/                                         # 审查标准——告诉 reviewer 怎么审
+│   └── code-check.md                               # 工程层面的固定 checklist
 ├── knowledge/                                      # 跨任务知识库（dreamer 上浮目标）
 │   └── principles/
 │       ├── README.md
@@ -55,7 +58,10 @@ examples/
 
 按"信息生产顺序"走一遍——从开工前的探索，到双契约，到日常沉淀，到蒸馏，到上浮：
 
-1. **基线** — [`engineering/conventions.md`](./engineering/conventions.md)：项目规范基线，所有角色的隐式输入
+1. **基线（双 SSOT）**
+   - [`engineering/conventions.md`](./engineering/conventions.md)：编码 / 命名 / 错误 / 日志规范——**告诉 coder 怎么写**
+   - [`engineering/tracing.md`](./engineering/tracing.md)：演示 engineering 可按主题拆分（可观测性专项）
+   - [`review/code-check.md`](./review/code-check.md)：审查 checklist 与风险分级——**告诉 reviewer 怎么审**
 
 2. **任务入口** — [`task/260601-todo-tag-filter/README.md`](./task/260601-todo-tag-filter/README.md) → [`progress.md`](./task/260601-todo-tag-filter/progress.md)
 
@@ -73,6 +79,8 @@ examples/
 
 ## 这个示例展示了什么
 
+- **engineering / review 分离**：编码规范和审查标准是两个独立 SSOT——前者告诉 coder 怎么写，后者告诉 reviewer 怎么审
+- **engineering 可按主题分册**：conventions（基线）+ tracing（专项）演示按需拆分
 - **task-designer** 的产出形态：progress / plan / 双契约 / background
 - **双契约** 两段如何配对（施工契约的每一项映射到验收契约的某一条）
 - **memory 三种典型形态**：决策记录、被否决方案的归档、跨任务原则的上浮
