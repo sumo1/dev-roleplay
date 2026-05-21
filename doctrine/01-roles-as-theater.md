@@ -71,6 +71,8 @@
 
 理想的实现给每个角色**独立的上下文窗口**。这不是技术奢侈品——这是让"独立视角"真正独立的唯一方式。只要 coder 的上下文还能被 evaluator 看到，evaluator 的判断就已经被污染了。
 
+这种实现风格可以概括成一句话：**stateless but iterative**——每个角色是无状态的（每轮启动都是空白上下文），但整个体系是迭代演进的（状态全部沉淀在 git 里的 SSOT 文件中：plan、memory、knowledge、code）。状态不在会话里，状态在仓库里。这正是 [doctrine/00 — 双 SSOT](./00-dual-ssot.md) 所约束的形态——把状态从易腐的对话搬到耐久的文件，独立视角和复利沉淀才同时成立。
+
 ## 7 个角色不是神圣数字
 
 当前给出的 7 个角色（task-designer / coder / evaluator / code-reviewer / doc-refresher / dreamer / git-push）是一套推荐起点，覆盖了多数工程任务会遇到的职能：规划 / 施工 / 验收 / 审查 / 文档 / 沉淀 / 发布。

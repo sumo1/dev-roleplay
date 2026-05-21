@@ -1,18 +1,18 @@
 # Roles
 
-角色骨架。每个文件可以独立阅读，7 份共同构成一条从规划到交付的流水线。
+角色骨架。每个文件可以独立阅读，7 份共同服务于知识在时间轴上的三段流动（详见 [doctrine/00 — 双 SSOT 与三个时间方向](../doctrine/00-dual-ssot.md)）。
 
 ## 清单
 
-| 角色 | 定位 |
-|------|------|
-| [task-designer](./task-designer.md) | 拆任务、开契约、生成任务文档结构 |
-| [coder](./coder.md) | 按契约施工、本地自验 |
-| [evaluator](./evaluator.md) | 复跑验收命令、独立判定是否达标 |
-| [code-reviewer](./code-reviewer.md) | 独立看 diff、风险分级 |
-| [doc-refresher](./doc-refresher.md) | 代码与文档一致性核查 |
-| [dreamer](./dreamer.md) | 记忆蒸馏、知识上浮 |
-| [git-push](./git-push.md) | 前置检查 → 审查 → 提交 → 推送 |
+| 角色 | 时间方向 | 定位 |
+|------|---------|------|
+| [task-designer](./task-designer.md) | 过去 → 现在 | 读历史沉淀，拆任务、开契约、生成任务文档结构 |
+| [coder](./coder.md) | 现在 | 按契约施工、本地自验 |
+| [evaluator](./evaluator.md) | 现在 | 复跑验收命令、独立判定是否达标 |
+| [code-reviewer](./code-reviewer.md) | 现在 | 独立看 diff、风险分级 |
+| [doc-refresher](./doc-refresher.md) | **现在 → 未来（保鲜引擎）** | 防止 SSOT 文档腐坏，让下次任务起点新鲜 |
+| [dreamer](./dreamer.md) | **现在 → 未来（沉淀引擎）** | 把当前任务的业务判断上浮回知识库 |
+| [git-push](./git-push.md) | 流程闸口 | 前置检查 → 审查 → 提交 → 推送 |
 
 ## 结构约定
 
