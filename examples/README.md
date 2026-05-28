@@ -1,6 +1,6 @@
 # Examples
 
-dev-roleplay 在真实项目里**填充后**的样子——含完整任务沉淀的全部产物。
+dev-roleplay-harness 在真实项目里**填充后**的样子——含完整任务沉淀的全部产物。
 
 骨架（`roles/`、`doctrine/`）告诉你形态和原理，这里告诉你它落进 git 之后长什么样。
 

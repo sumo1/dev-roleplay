@@ -145,7 +145,7 @@ Claude Code 还有 `.claude/skills/` 作为用户可主动触发的 skill 定义
 - **Subagent**（`.claude/agents/`）：被主会话自动 spawn，完成封闭的子任务
 - **Skill**（`.claude/skills/`）：用户主动触发（通过 `/{skill-name}`），通常是一条完整的工作流
 
-dev-roleplay 的 7 个角色里，**git-push** 最适合同时作为 skill 存在——用户输入 "提交" / "/git-push" 时触发，内部再 spawn code-reviewer + doc-refresher 两个 subagent。
+dev-roleplay-harness 的 7 个角色里，**git-push** 最适合同时作为 skill 存在——用户输入 "提交" / "/git-push" 时触发，内部再 spawn code-reviewer + doc-refresher 两个 subagent。
 
 其他 6 个角色主要作为 subagent 存在，由主会话按需调度。
 
