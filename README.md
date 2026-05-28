@@ -1,37 +1,12 @@
 # dev-roleplay
 
-一个AI友好的业务知识库构建方法。
+一套用于研发提效的多角色扮演与协作的Harness。
 
-## 你是否也面临这些问题
-
-业因：
-接到业务需求时，
-1. 通过翻代码、找文档、问人，了解前置业务背景。
-2. 写功能代码（和文档）。
-3. 交付。
-
-业果：
-别人在接到有相关性的业务需求时，
-1. 别人拿到需求进行分析。
-2. 别人看完代码来问你。
-3. 你还在，记忆力还好，能回答。
-4. 但你很忙，懒得回答。
-5. 你也可能忘记了当初为啥这么写。
-6. 文档也忘记更新了。
-7. 可能你就是不想回答。
-8. 踢回去让别人自己解决。
-9. 但你也可能面临同样的境遇。
-10. 只能抱希望，别人的文档写得好，别人记忆力好，别人协作态度好。
-
-以上因果，如是循环。
-
-AI时代，最大的瓶颈，在于人和人之间的交流。
-
-## So，Why
+## for what
 
 当AI时代，Coding不再是瓶颈的时候，我们的大部分精力花费在哪里。
 
-业务知识。
+业务知识的获取和积累。
 
 作为一个业务开发，我们需要了解业务，编写代码，更新业务认知。这是我们的经验池，也是价值所在。
 
@@ -41,35 +16,97 @@ AI时代，最大的瓶颈，在于人和人之间的交流。
 
 **沉淀在文档里**——但文档放在 Confluence、Notion、飞书时，它脱离了工程纪律：不会被 review、不会被 diff、不会被回溯，每次代码改完文档没人想起来同步，过两个月就和现实脱节。然后大家就不信文档了。
 
-**沉淀在人脑里**——人会忘，人会走，人和人对接有成本。一个项目的关键判断只要还在某个人脑里没出来，他请假的时候这个项目就在带病运行。
+**沉淀在人脑里**——人会忘，人会走，AI时代，最大的瓶颈，在于人和人之间的交流。
 
 三个地方各有缺陷，单独任何一个都不能作为业务知识的 SSOT。
 
 我们使用AI Coding，中间会有大量的交流，其中包含了大量的判断、决策、设计思路。
-每次任务结束，agent 学到的判断、踩过的坑、被否决的方案，全留在那次会话上下文里。会话一关，全部蒸发。下次新 agent 来，从零开始论证已经决定过的事，从零开始踩已经踩过的坑——和让一个失忆的同事每周一重新入职一样昂贵。
+每次任务结束，agent 学到的判断、踩过的坑、被否决的方案，全留在那次会话上下文里。
+这和Agent的过程数据一样，极具价值。
 
-## So，我们需要一个AI友好的业务知识库
-
-让业务知识能够：
-**持久化**业务知识可记录，可追溯
-**保持新鲜**Fresh SSOT
-**自进化**抗失忆
-**对抗式协作**抗漂移
-**自反思**抗 context rot
-
-**释放你的精力，多点时间去思考，Thinking is EVERYTHING**
+这套Harness，就是为了AI友好的记录业务知识。 释放你的精力，多点时间去思考，Thinking is EVERYTHING.
 
 ## dev-roleplay
+核心主张：
+**代码是工程仓库的一等公民**
+**业务知识也是工程仓库的一等公民**
+两者一起作为软件工程的双 SSOT，受同一套 harness 约束。
 
-dev-roleplay 主张：**代码不再是工程仓库的唯一一等公民，业务知识是另一等公民**。两者一起作为软件工程的双 SSOT，受同一套 harness 约束——同一个 git repo、同一套 review 纪律、同一套腐坏惩罚。
+通过一套多角色协作的Harness框架，保持代码仓库中业务知识和工程规范的信息有效密度。
 
-这个 harness 把三段时间里的业务知识都收进来：
+## 用与不用
 
-- **前置**——已经沉淀的项目背景、跨任务原则、编码规范、审查标准，放在 `docs/knowledge/` / `docs/engineering/` / `docs/review/`，开工前 agent 会主动读
-- **当下**——这次任务的 PRD、双契约、按日决策、被否决的方案，放在 `docs/task/{id}/`，整个任务过程在这里发生、可追溯、可审计
-- **沉淀回去**——任务结束时把这次产生的判断、踩坑、原则蒸馏出来，回到前置的知识库，让下一个任务从更厚实的起点出发
+适合：多步骤、跨模块、错一点就很贵、会被多次回看的工程任务——数据一致性、API 契约、服务迁移、长期演进的产品代码。
 
-写代码的过程同时也是写业务知识的过程，两者在同一个 PR 里被 review、一起 commit、一起被三个月后回看的人读到。**代码读到 what，文档读到 why**——这才是工程的完整 SSOT。
+不适合：一次性小改、探索性 prototyping、单文件脚本。
+
+还有一种情况要特别提：团队不接受文档进 git，文档继续放外部工具——这种情况 doc-refresher 和 dreamer 失去落点，自进化的回路就断了。这是哲学不匹配，不是工具问题。
+
+详细讨论在 [`doctrine/06-anti-patterns`](./doctrine/06-anti-patterns.md)。
+
+## 范围
+
+dev-roleplay 面向支持独立 subagent 原语的 coding agent 工具（如 Claude Code）。
+角色骨架与语言、框架、技术栈无关；具体路径、命令、规范由使用者在自己项目内定义。
+具体接入方式见 [`integration/claude-code/`](./integration/claude-code/)。
+
+## 目录
+
+- [`doctrine/`](./doctrine/) — 设计思想（先读 [`00-dual-ssot`](./doctrine/00-dual-ssot.md)）
+- [`roles/`](./roles/) — 7 个角色骨架
+- [`integration/`](./integration/) — 针对具体 harness 的接入指南
+- [`examples/`](./examples/) — 真实项目下的填充样例
+
+## 角色清单
+
+| 角色 | 核心职责                  |
+|---|-----------------------|
+| [task-designer](./roles/task-designer.md) | 读历史沉淀，拆任务、开契约         |
+| [coder](./roles/coder.md) | 按契约施工、本地自验            |
+| [evaluator](./roles/evaluator.md) | 复跑验收命令，独立判定           |
+| [code-reviewer](./roles/code-reviewer.md) | 看 diff、风险分级           |
+| [doc-refresher](./roles/doc-refresher.md) | 保持代码和文档的信息一致性         |
+| [dreamer](./roles/dreamer.md) | 把流水记忆酿造为长期知识          |
+| [git-push](./roles/git-push.md) | 检查 → review → 提交 → 推送 |
+
+整套Harness框架中的角色扮演agents，聚焦在业务知识的沉淀<->迭代的循环：
+
+```
+   前置                  迭代                    沉淀回去
+─────────────────────────────────────────────────────
+ 历史沉淀  ─→   当前任务的拆解 + 执行  ─→   入仓回流
+
+knowledge/       task-designer              dreamer
+engineering/     coder + evaluator             ↓
+   ↑             code-reviewer           knowledge/
+   │             doc-refresher  ←─保鲜   engineering/
+   │                 ↓                       ↑
+   └──────  下一次任务从新鲜起点出发  ─────────┘
+```
+
+**前置知识** 前置业务沉淀和历史知识的更新，维持和代码的一致性。
+已经沉淀的项目背景、跨任务原则、编码规范、审查标准，放在 `docs/knowledge/` / `docs/engineering/` / `docs/review/`，开工前 agent 会主动读
+`doc-refresher` 守这一段，每次代码变更后扫一遍可能腐坏的文档。
+
+**当下任务** 是一段需要独立视角的工作。
+这次任务的 PRD、双契约、按日决策、被否决的方案，放在 `docs/task/{id}/`，整个任务过程在这里发生、可追溯、可审计
+`coder` 写、`evaluator` 验、`code-reviewer` 审，三个角色各自独立上下文，互相不污染判断。这就是上一节讲的对抗式协作的具体形态。
+
+**过程记录和沉淀** 研发过程中，人和LLM聊天协作，产生的判断、踩坑、原则蒸馏出来，回到前置的知识库，让下一个任务从更厚实的起点出发
+`dreamer` 守这一段，把流水的 task memory 按沉淀判据蒸馏成 SUMMARY 和跨任务原则——既防流失，也防 context rot。
+
+`doc-refresher` 和 `dreamer` 是这套体系的两台引擎，也是**自进化能成立的物理基础**。
+一台守外部一致性（防文档腐坏），一台守内部信息密度（防沉淀腐坏）。
+
+写代码的过程同时也是写业务知识的过程，两者在同一个 PR 里被 review、一起 commit、一起被三个月后回看的人读到。
+**代码读到 what，文档读到 why**——这才是工程的完整 SSOT。
+
+通过多角色协作，让业务知识具备以下特性：
+**持久化**业务知识可记录，可追溯
+**自进化**抗失忆
+**自反思**总结沉淀
+**保持新鲜**Fresh SSOT
+**对抗式协作**抗漂移
 
 ## 自进化：每一次都比上次更懂
 
@@ -141,30 +178,6 @@ dev-roleplay 把这件事用 **对抗式协作（adversarial collaboration）** 
 
 "对抗"的目的不是制造内耗，是**让真相在两个独立视角的碰撞中浮出来**。这正是学术界 adversarial collaboration 的本意：持对立立场的人通过协作推进真相，而不是各自吵到散场。
 
-## 七个角色服务三个时间方向
-
-整套 agents 不是一条横向流水线，而是知识在时间轴上的三段流动：
-
-```
-   前置                  当下                    沉淀回去
-─────────────────────────────────────────────────────
- 历史沉淀  ─→   当前任务的拆解 + 执行  ─→   入仓回流
-
-knowledge/       task-designer              dreamer
-engineering/     coder + evaluator             ↓
-   ↑             code-reviewer           knowledge/
-   │             doc-refresher  ←─保鲜   engineering/
-   │                 ↓                       ↑
-   └──────  下一次任务从新鲜起点出发  ─────────┘
-```
-
-**前置 → 当下** 是一条容易腐坏的链路——文档不和代码一起维护，下一次 task-designer 读到的就是过期事实，整条链从一开始就漂移。`doc-refresher` 守这一段，每次代码变更后扫一遍可能腐坏的文档。
-
-**当下** 是一段需要独立视角的工作——`coder` 写、`evaluator` 验、`code-reviewer` 审，三个角色各自独立上下文，互相不污染判断。这就是上一节讲的对抗式协作的具体形态。
-
-**当下 → 沉淀回去** 是一段最容易流失的链路——这次任务里被否决的方案、推翻过的假设、用证据换来的判断，如果不上浮回知识库，下一个任务还得从头再走一遍。`dreamer` 守这一段，把流水的 task memory 按沉淀判据蒸馏成 SUMMARY 和跨任务原则——既防流失，也防 context rot。
-
-`doc-refresher` 和 `dreamer` 是这套体系的两台引擎，也是**自进化能成立的物理基础**。一台守外部一致性（防文档腐坏），一台守内部信息密度（防沉淀腐坏）。少一台，自进化的回路就会在某个方向漏水；少两台，整套 agents 就退化成"几个干活的工种"，跟一个失忆的实习生没区别。
 
 ## 让代码读到更多的 why
 
@@ -180,18 +193,6 @@ engineering/     coder + evaluator             ↓
 
 哲学的完整推导见 [`doctrine/`](./doctrine/)，先读 [`00-dual-ssot`](./doctrine/00-dual-ssot.md)。
 
-## 角色清单
-
-| 角色 | 时间方向 | 核心职责 |
-|---|---|---|
-| [task-designer](./roles/task-designer.md) | 前置 → 当下 | 读历史沉淀，拆任务、开契约 |
-| [coder](./roles/coder.md) | 当下 | 按契约施工、本地自验 |
-| [evaluator](./roles/evaluator.md) | 当下 | 复跑验收命令，独立判定 |
-| [code-reviewer](./roles/code-reviewer.md) | 当下 | 看 diff、风险分级 |
-| [doc-refresher](./roles/doc-refresher.md) | 当下 → 沉淀（保鲜引擎） | 把可能腐坏的文档标出 |
-| [dreamer](./roles/dreamer.md) | 当下 → 沉淀（沉淀引擎） | 把流水记忆酿造为长期知识 |
-| [git-push](./roles/git-push.md) | 流程闸口 | 检查 → review → 提交 → 推送 |
-
 ## 协议
 
 让七个角色真正协作起来的，是仓库里几个跨角色的硬约定：
@@ -205,29 +206,6 @@ engineering/     coder + evaluator             ↓
 这套骨架不是先有理论再写示例，是从一个真实的跨多仓库服务迁移项目里活下来的——多 coder 并行施工逼出了双契约和文件范围互斥；反复看到"用户点破同一类问题"沉淀成了"先质疑问题是否成立"原则；跨仓库切流的漂移代价催生了三层记忆流动；文档与代码不断脱节让"提交前扫一遍文档新鲜度"成了流水线固定一站。
 
 脱敏后的真实形态在 [`examples/`](./examples/)——一个完整任务从 background 探索、双契约 plan、按日 memory，到 dreamer 蒸馏出 SUMMARY、再上浮一条原则到 `knowledge/principles/` 的全程。
-
-## 用与不用
-
-适合：多步骤、跨模块、错一点就很贵、会被多次回看的工程任务——数据一致性、API 契约、服务迁移、长期演进的产品代码。
-
-不适合：一次性小改、探索性 prototyping、单文件脚本。
-
-还有一种情况要特别提：团队不接受文档进 git，文档继续放外部工具——这种情况 doc-refresher 和 dreamer 失去落点，自进化的回路就断了。这是哲学不匹配，不是工具问题。
-
-详细讨论在 [`doctrine/06-anti-patterns`](./doctrine/06-anti-patterns.md)。
-
-## 范围
-
-dev-roleplay 面向支持独立 subagent 原语的 coding agent 工具（如 Claude Code）。
-角色骨架与语言、框架、技术栈无关；具体路径、命令、规范由使用者在自己项目内定义。
-具体接入方式见 [`integration/claude-code/`](./integration/claude-code/)。
-
-## 目录
-
-- [`doctrine/`](./doctrine/) — 设计思想（先读 [`00-dual-ssot`](./doctrine/00-dual-ssot.md)）
-- [`roles/`](./roles/) — 7 个角色骨架
-- [`integration/`](./integration/) — 针对具体 harness 的接入指南
-- [`examples/`](./examples/) — 真实项目下的填充样例
 
 ## License
 
